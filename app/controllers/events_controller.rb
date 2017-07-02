@@ -7,6 +7,27 @@ class EventsController < ApplicationController
     @events = Event.all
   end
 
+  # GET /events/calendar_feed.ics
+  def calendar_feed
+    cal = Icalendar::Calendar.new
+    cal.event do |e|
+      e.dtstart     = Icalendar::Values::Date.new('20050428')
+      e.dtend       = Icalendar::Values::Date.new('20050429')
+      e.summary     = "Meeting with the man."
+      e.description = "Have a long lunch meeting and decide nothing..."
+      e.ip_class    = "PRIVATE"
+    end
+
+    cal.publish
+    cal_string = cal.to_ical
+
+   respond_to do |format|
+      format.ics do
+        render plain: cal.to_ical, content_type: 'text/calendar'
+      end
+    end
+  end
+
   # GET /events/1
   # GET /events/1.json
   def show
