@@ -10,12 +10,9 @@ class EventsController < ApplicationController
   # GET /events/calendar_feed.ics
   def calendar_feed
     cal = Icalendar::Calendar.new
-    cal.event do |e|
-      e.dtstart     = Icalendar::Values::Date.new('20050428')
-      e.dtend       = Icalendar::Values::Date.new('20050429')
-      e.summary     = "Meeting with the man."
-      e.description = "Have a long lunch meeting and decide nothing..."
-      e.ip_class    = "PRIVATE"
+    events = Event.all
+    events.each do |event|
+      cal.add_event(event.to_ics)
     end
 
     cal.publish
