@@ -1,4 +1,4 @@
-# README
+# Sample Rails Calendar Feed
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/dylanpinn/rails-calendar-feed.svg)](https://greenkeeper.io/)
 
