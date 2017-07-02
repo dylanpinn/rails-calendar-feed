@@ -10,18 +10,15 @@ class EventsController < ApplicationController
   # GET /events/calendar_feed.ics
   def calendar_feed
     cal = Icalendar::Calendar.new
-    cal.event do |e|
-      e.dtstart     = Icalendar::Values::Date.new('20050428')
-      e.dtend       = Icalendar::Values::Date.new('20050429')
-      e.summary     = "Meeting with the man."
-      e.description = "Have a long lunch meeting and decide nothing..."
-      e.ip_class    = "PRIVATE"
+    events = Event.all
+    events.each do |event|
+      cal.add_event(event.to_ics)
     end
 
     cal.publish
     cal_string = cal.to_ical
 
-   respond_to do |format|
+    respond_to do |format|
       format.ics do
         render plain: cal.to_ical, content_type: 'text/calendar'
       end
@@ -83,13 +80,13 @@ class EventsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event
-      @event = Event.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event
+    @event = Event.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def event_params
-      params.require(:event).permit(:name, :start_date, :end_date, :summary)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def event_params
+    params.require(:event).permit(:name, :start_date, :end_date, :summary)
+  end
 end

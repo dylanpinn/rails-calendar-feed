@@ -23,3 +23,14 @@ test:
 production:
   <<: *default
   database: db/production.sqlite3
+
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: 5
+  database: rails-calendar-feed_production
+  username: rails-calendar-feed
+  password: <%= ENV['RAILS_CALENDAR_FEED_DATABASE_PASSWORD'] %>
