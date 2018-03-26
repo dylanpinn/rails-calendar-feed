@@ -16,7 +16,6 @@ class EventsController < ApplicationController
     end
 
     cal.publish
-    cal_string = cal.to_ical
 
     respond_to do |format|
       format.ics do
