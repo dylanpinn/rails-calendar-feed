@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class Event < ApplicationRecord
   def to_ics
     event = Icalendar::Event.new
-    event.dtstart = self.start_date
-    event.dtend = self.end_date
-    event.summary = self.name
-    event.description = self.summary
-    return event
+    event.dtstart = start_date
+    event.dtend = end_date
+    event.summary = name
+    event.description = summary
+    event
   end
 end
