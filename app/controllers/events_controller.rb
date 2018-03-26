@@ -40,42 +40,34 @@ class EventsController < ApplicationController
 
   # POST /events
   # POST /events.json
-  def create
+  def create # rubocop:disable Metrics/MethodLength
     @event = Event.new(event_params)
 
     respond_to do |format|
       if @event.save
         format.html do
-          redirect_to @event,
-                      notice: 'Event was successfully created.'
+          redirect_to @event, notice: "#{notice_prefix} created."
         end
         format.json { render :show, status: :created, location: @event }
       else
         format.html { render :new }
-        format.json do
-          render json: @event.errors,
-                 status: :unprocessable_entity
-        end
+        format.json json_unprocessable_entity
       end
     end
   end
 
   # PATCH/PUT /events/1
   # PATCH/PUT /events/1.json
-  def update
+  def update # rubocop:disable Metrics/MethodLength
     respond_to do |format|
       if @event.update(event_params)
         format.html do
-          redirect_to @event,
-                      notice: 'Event was successfully updated.'
+          redirect_to @event, notice: "#{notice_prefix} updated."
         end
         format.json { render :show, status: :ok, location: @event }
       else
         format.html { render :edit }
-        format.json do
-          render json: @event.errors,
-                 status: :unprocessable_entity
-        end
+        format.json json_unprocessable_entity
       end
     end
   end
@@ -86,14 +78,21 @@ class EventsController < ApplicationController
     @event.destroy
     respond_to do |format|
       format.html do
-        redirect_to events_url,
-                    notice: 'Event was successfully destroyed.'
+        redirect_to events_url, notice: "#{notice_prefix} destroyed."
       end
       format.json { head :no_content }
     end
   end
 
   private
+
+  def notice_prefix
+    'Event was successfully'
+  end
+
+  def json_unprocessable_entity
+    { json: @event.errors, status: :unprocessable_entity }
+  end
 
   def cal
     Icalendar::Calendar.new
