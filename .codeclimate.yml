@@ -14,14 +14,13 @@ engines:
       languages:
       - ruby
       - javascript
-      - python
-      - php
   eslint:
     enabled: true
   fixme:
     enabled: true
   rubocop:
     enabled: true
+    channel: rubocop-0-52
 ratings:
   paths:
   - Gemfile.lock
