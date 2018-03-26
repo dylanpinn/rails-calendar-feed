@@ -1,5 +1,13 @@
 {
   "name": "rails-calendar-feed",
   "private": true,
-  "dependencies": {}
+  "dependencies": {},
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:dylanpinn/rails-calendar-feed.git",
+  "author": "Dylan Pinn <dylan@dylanpinn.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.19.1"
+  }
 }
