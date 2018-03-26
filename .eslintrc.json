@@ -1,3 +1,7 @@
 {
-  "extends": "recommended"
+  "extends": "eslint:recommended",
+  "globals": {
+    "ActionCable": true,
+    "App": true
+  }
 }
