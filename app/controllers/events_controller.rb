@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Events Controller
 class EventsController < ApplicationController
   before_action :set_event, only: %i[show edit update destroy]
 
@@ -11,7 +12,6 @@ class EventsController < ApplicationController
 
   # GET /events/calendar_feed.ics
   def calendar_feed
-    cal = Icalendar::Calendar.new
     events = Event.all
     events.each do |event|
       cal.add_event(event.to_ics)
@@ -45,11 +45,17 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
-        format.html { redirect_to @event, notice: 'Event was successfully created.' }
+        format.html do
+          redirect_to @event,
+                      notice: 'Event was successfully created.'
+        end
         format.json { render :show, status: :created, location: @event }
       else
         format.html { render :new }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @event.errors,
+                 status: :unprocessable_entity
+        end
       end
     end
   end
@@ -59,11 +65,17 @@ class EventsController < ApplicationController
   def update
     respond_to do |format|
       if @event.update(event_params)
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+        format.html do
+          redirect_to @event,
+                      notice: 'Event was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @event }
       else
         format.html { render :edit }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @event.errors,
+                 status: :unprocessable_entity
+        end
       end
     end
   end
@@ -73,19 +85,25 @@ class EventsController < ApplicationController
   def destroy
     @event.destroy
     respond_to do |format|
-      format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
+      format.html do
+        redirect_to events_url,
+                    notice: 'Event was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
 
   private
 
+  def cal
+    Icalendar::Calendar.new
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_event
     @event = Event.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def event_params
     params.require(:event).permit(:name, :start_date, :end_date, :summary)
   end
