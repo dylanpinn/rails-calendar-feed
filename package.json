@@ -8,6 +8,6 @@
   "author": "Dylan Pinn <dylan@dylanpinn.com>",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^4.19.1"
+    "eslint": "^5.0.0"
   }
 }
